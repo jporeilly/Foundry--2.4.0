@@ -281,6 +281,7 @@ Note: keys are located in .ssh directory. 2 keys: id_rsa (private) id_rsa.pub (p
 ssh-copy-id ha-proxy@10.0.0.1
 ssh-copy-id k8s@10.0.0.101
 ssh-copy-id k8s@10.0.0.102
+ssh-copy-id k8s@10.0.0.103
 ```
 Password: lumada
 Note: this will copy over both the private and public keys.

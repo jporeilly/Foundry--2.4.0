@@ -25,12 +25,12 @@ ansible_user: k8s
 # just names the cluster
 cluster_name: skytap.example
 # checks Pod connectivity
-deploy_netchecker: false
-# enables profiling (flame graph)
 kube-profiling: true
 # install kubectl and generates local admin.conf
 kubeconfig_localhost: true
 kubectl_localhost: true
+# enables Helm
+helm_enabled: true
 # enables k8s metrics
 metrics_server_enabled: true
 
