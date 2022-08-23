@@ -1,0 +1,48 @@
+---
+# If you need to back up and try install again this will remove software from the Nodes.
+# Note: This does make any changes to the playbooks.
+- name: Cluster Hosts Reset
+  hosts: "{{ groups['kube-node'] }}"
+  become: true
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+  tags: 
+   - reset
+   - never
+  tasks:
+    # Remove Helm
+    - name:  Remove helm
+      ignore_errors: true
+      shell:
+        cmd: "{{ item }}"
+      with_items: 
+      - rm ~{{ ansible_user }}/get_helm.sh;
+      - rm /usr/local/bin/helm;
+      - rm -rf /etc/docker/certs.d/{{ groups['installer'][0] }} 
+
+# Reset: remove Docker
+- name: Installer Hosts Reset
+  hosts: "{{ groups['installer'][0] }}"
+  become: true
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+  tags: 
+   - reset
+   - never
+  tasks:
+    - name:  rm docker and kubectl
+      ignore_errors: true
+      shell:
+        cmd: "{{ item }}"
+      with_items:
+      - snap remove kubectl;
+      - docker rm -f registry;
+      - systemctl stop docker;
+      - apt remove -y docker.io;
+      - rm -rf /etc/docker
+      - rm -rf /var/lib/docker
+      - rm -rf ~/.kube;
+      - rm -rf ~/installer/.kube;
+      - groupdel docker

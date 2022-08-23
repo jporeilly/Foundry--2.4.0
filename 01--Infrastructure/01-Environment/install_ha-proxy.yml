@@ -1,0 +1,47 @@
+# Install HA Proxy
+ 
+ - name: Configure Cluster Nodes
+   hosts: "{{ groups['haproxy'] }}"
+   become: true
+   become_method: sudo
+   become_user: root
+   gather_facts: true
+   any_errors_fatal: true
+   vars:
+    ansible_ssh_private_key_file: "~/.ssh/id_rsa"
+    ansible_ssh_private_key_file_name: "id_rsa"
+    ansible_user: haproxy
+
+   tasks:
+    # Check Nodes
+    - name: Ping Nodes
+      ping:
+      tags: 
+       - info
+
+    # Update Packages
+    - name: Update apt repo and cache on HA Proxy
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+      tags: 
+       - updates
+
+    # Upgrade Packages
+    - name: Upgrade all packages on servers
+      apt: upgrade=dist force_apt_get=yes
+      tags: 
+       - updates
+  
+    # Check if reboot is required
+    - name: Check if a reboot is needed on all servers
+      register: reboot_required_file
+      stat: path=/var/run/reboot-required get_md5=no 
+
+    # Install HA Proxy
+    - name: install haproxy
+      apt: 
+       name=haproxy
+       state=present
+       update_cache=yes
+      tags:
+       - haproxy
+       

@@ -1,0 +1,95 @@
+---
+# Preflight - Foundry platform
+- name: Preflight Foundry Cluster
+  hosts:  "{{ groups['kube-node'] }}"
+  become: true
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+  vars:
+    ansible_ssh_private_key_file: "~/.ssh/id_rsa"
+    ansible_ssh_private_key_file_name: "id_rsa"
+    ansible_user: k8s
+
+  tasks:
+    # Ping Nodes
+    - name: Ping Nodes
+      ping:
+      tags: 
+       - info
+   
+    # Update Packages
+    - name: Update all installed packages using YUM module
+      yum:
+       name: '*'
+       state: latest
+       update_cache: yes
+       update_only: yes
+      register: yum_update_status
+      tags: 
+      - updates
+
+    # Elasticsearch requires a max map count > 262144
+    # Details: https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
+    - name: Expand max_map_count 
+      shell: |
+       echo "vm.max_map_count=262144" >> /etc/sysctl.d/sysctl.conf
+       sysctl -p
+      tags: 
+      - elastic  
+
+     # Reboot Nodes and Test
+    - name: Reboot hosts if required
+      reboot:
+        msg: "Reboot initiated by Ansible"
+        connect_timeout: 5
+        reboot_timeout: 600
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: whoami
+      when: yum_update_status.changed
+
+# Switch to Ansible Controller
+# Setup kubectl for local user and root by copying from the cluster
+- name: Setup kubectl for 'installer' user on Ansible Controller
+  hosts: "{{ groups['installer'][0] }}"
+  become: yes
+  become_user: "{{ lookup('env','USER') }}"
+  gather_facts: false
+  any_errors_fatal: true
+  vars:
+    src: "~/Packages/kubespray-2.19.0/artifacts"
+    dst: "~/.kube"
+  tags: kubeconfig
+  
+  tasks:
+    - name: Move kubectl to /usr/local/bin
+      command: sudo cp "{{ src }}/kubectl"  /usr/local/bin
+
+    # Copy over admin.conf and change file name to config
+    - name: Copy admin.conf to .kube/config
+      copy:
+        src: "{{ src }}/admin.conf"
+        dest: "{{ dst }}/config"
+
+    # Test kubectl config
+    - name: Check kubectl connectivity from installer node to cluster
+      shell: "kubectl get nodes"
+      register: nodes
+      become: false
+
+    # Display the Nodes
+    - name: Show output from command --> kubectl get nodes
+      debug:
+        msg: "{{ nodes.stdout_lines }}"
+
+    # Test kubectl config
+    - name: Check kubectl connectivity from installer node to cluster
+      shell: "kubectl get pods -n kube-system"
+      register: pods
+      become: false
+
+    # Display Pods in kube-system
+    - name: Show output from command --> kubectl get pods -n kube-system
+      debug:
+        msg: "{{ pods.stdout_lines }}"    

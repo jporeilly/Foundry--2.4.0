@@ -1,0 +1,74 @@
+---
+## Kubespray takes care of the Kubernetes preflight requirements.
+# Preflight - Hardware 
+- name: Configure Cluster Nodes
+  hosts: "{{ groups['kube-node'] }}"
+  become: true
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+  any_errors_fatal: true
+  vars:
+    ansible_ssh_private_key_file: "~/.ssh/id_rsa"
+    ansible_ssh_private_key_file_name: "id_rsa"
+    ansible_user: k8s
+    ansible_python_interpreter: /usr/bin/python3
+ 
+  tasks:
+   # Ping Nodes
+   - name: Ping Nodes
+     ping:
+     tags: 
+       - info
+   
+   # Update Packages
+   - name: Update installed packages using YUM module
+     yum:
+      name: '*'
+      state: latest
+      update_cache: yes
+      update_only: yes
+     register: yum_update_status
+     tags: 
+      - updates
+      
+   # Remove Docker and PodMan to prevent runc conflicts
+   - name: Remove Docker and Podman
+     dnf:
+       name:
+       - docker
+       - container-tools
+       - docker-client
+       - docker-client-latest
+       - docker-common
+       - docker-latest
+       - docker-latest-logrotate
+       - docker-logrotate
+       - docker-selinux
+       - docker-engine-selinux
+       - docker-engine
+       - buildah
+       - skopeo
+       - podman
+       - containers-common
+       - atom-registries
+       - runc
+       state: absent 
+   
+   # Remove legacy packages
+   - name: Remove legacy packages
+     yum:
+      autoremove: yes
+
+    # easy option :)  Once Foundry installed open Master / Worker ports for network - Calico 
+   - name: Turn off firewall for kubernetes Install
+     command: systemctl disable firewalld
+
+   # Reboot the Nodes
+   - name: Reboot the Nodes with all defaults
+     shell: sleep 5 && reboot
+     async: 1
+     poll: 0
+     when: yum_update_status.changed
+     tags:
+      - reboot
