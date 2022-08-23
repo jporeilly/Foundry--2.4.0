@@ -21,13 +21,14 @@ Domain Name: skytap.example
 | Server Name         | Host               |  IP address | OS              | User      | Password |
 | --------------------| -------------------| ----------- | --------------- | ----------| ---------|
 | HAProxy             | haproxy            | 10.0.0.1    | Ubuntu 20.04    | haproxy   | lumada   |  
-| Master Node 1       | k8s-master-node-01 | 10.0.0.101  | AlmaLinux 8.4   | k8s       | lumada   |
-| Master Node 2       | k8s-master-node-02 | 10.0.0.102  | AlmaLinux 8.4   | k8s       | lumada   |
+| Master Node 1       | master-node-01     | 10.0.0.101  | AlmaLinux 8.4   | k8s       | lumada   |
+| Worker Node 1       | worker-node-01     | 10.0.0.102  | AlmaLinux 8.4   | k8s       | lumada   |
+| Worker Node 2       | worker-node-02     | 10.0.0.103  | AlmaLinux 8.4   | k8s       | lumada   |
 | Ansible Controller  | ansible-controller | 10.0.0.2    | Ubuntu 22.04    | installer | lumada   |
 |
 
 VM sequence: 
-* Foundry Master 1-2 
+* Master 1 & Workers 1 & 2
 * HAProxy 
 * Ansible Controller 
 
@@ -35,12 +36,12 @@ VM sequence:
 
 ---
 
-<em>Master Nodes</em>  
+<em>Master / Worker Nodes</em>  
 
-These servers were deployed with AlmaLinux 8.4 Firstboot images.
+These servers were deployed with headless AlmaLinux 8.4 Firstboot images.
 Each of the nodes in the cluster has been configured with a 'k8s' user with sudo priviliges.
 
-<font color='teal'>The Master Nodes have been configured with the required user.</font>  
+<font color='teal'>The Master / Worker Nodes have been configured with the required user.</font>  
 
 ``update cluster nodes:``
 ```
