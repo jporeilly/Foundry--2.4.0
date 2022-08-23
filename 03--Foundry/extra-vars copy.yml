@@ -25,37 +25,18 @@ ansible_user: k8s
 # just names the cluster
 cluster_name: skytap.example
 # checks Pod connectivity
-deploy_netchecker: false
-# enables profiling (flame graph)
 kube-profiling: true
 # install kubectl and generates local admin.conf
 kubeconfig_localhost: true
-kubectl_localhost: true 
+kubectl_localhost: true
+# enables Helm
+helm_enabled: true
 # enables k8s metrics
 metrics_server_enabled: true
 
 # External load balancer for k8s masters
 apiserver_loadbalancer_domain_name: "haproxy.skytap.example"
 
-
-# ===== SELF_SIGNED DOCKER REGISTRY =====
-# The self-signed ,local,private Docker Regsitry is installed and configured 
-# on the Ansible-Controller. 
-# Uncomment the following config settings if installing using the playbook.
-
-# Docker repo URL.
-#docker_repo_url: https://download.docker.com/linux
-
-# Used only for Debian/Ubuntu. Switch 'stable' to 'nightly' if needed.
-#docker_apt_release_channel: stable
-#docker_apt_arch: amd64
-#docker_apt_repository: "deb [arch={{ docker_apt_arch }}] {{ docker_repo_url }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
-#docker_apt_ignore_key_error: true
-#docker_apt_gpg_key: "{{ docker_repo_url }}/{{ ansible_distribution | lower }}/gpg"
-
-# Upload Foundry images
-registry_domain: ansible-controller.skytap.example
-registry_port: "443"
 
 # =====  DNS ===== 
 # If on AWS and HV you will likley need to change the DNS route
