@@ -2,7 +2,7 @@
 ## Kubespray takes care of the Kubernetes preflight requirements.
 # Preflight - Hardware 
 - name: Configure Cluster Nodes
-  hosts: "{{ groups['kube-node'] }}"
+  hosts: "{{ groups['k8s-cluster'] }}"
   become: true
   become_method: sudo
   become_user: root
