@@ -1,7 +1,7 @@
 ---
 # Preflight - Foundry platform
 - name: Preflight Foundry Cluster
-  hosts:  "{{ groups['kube-node'] }}"
+  hosts:  "{{ groups['k8s-cluster'] }}"
   become: true
   become_method: sudo
   become_user: root

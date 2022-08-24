@@ -1,4 +1,3 @@
-# hosts-skytap.yml
 all:
   hosts:
     haproxy.skytap.example:
@@ -17,20 +16,24 @@ all:
       ip: 10.0.0.101
       access_ip: 10.0.0.101
       ansible_user: k8s
-    master-node-02.skytap.example:
+    worker-node-01.skytap.example:
       ansible_host: 10.0.0.102
       ip: 10.0.0.102
       access_ip: 10.0.0.102
+      ansible_user: k8s
+    worker-node-02.skytap.example:
+      ansible_host: 10.0.0.103
+      ip: 10.0.0.103
+      access_ip: 10.0.0.103
       ansible_user: k8s
   children:
     kube-master:
       hosts:
         master-node-01.skytap.example:
-        master-node-02.skytap.example:
     kube-node:
       hosts:
-        master-node-01.skytap.example:
-        master-node-02.skytap.example:
+        worker-node-01.skytap.example:
+        worker-node-02.skytap.example:
     etcd:
       hosts:
         master-node-01.skytap.example:
@@ -40,9 +43,9 @@ all:
         kube-node:
     installer:
       hosts:
-        ansible-controller.skytap.example:
-    haproxy:                    
+        ansible-controller.skytap.example: 
+    haproxy:
       hosts:
-        haproxy.skytap.example:
+        haproxy.skytap.example:           
     calico-rr:
-      hosts: {} 
+      hosts: {}
