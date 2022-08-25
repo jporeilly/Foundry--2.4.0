@@ -21,7 +21,7 @@
       - rm /usr/local/bin/helm;
       - rm -rf /etc/docker/certs.d/{{ groups['installer'][0] }} 
 
-# Reset: remove Docker
+# Reset: Remove Docker
 - name: Installer Hosts Reset
   hosts: "{{ groups['installer'][0] }}"
   become: true
