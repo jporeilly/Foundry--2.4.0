@@ -1,0 +1,57 @@
+---
+# Installs NFS server on Ansible Controller
+- name: NFS
+  hosts: "{{ groups['installer'][0] }}"
+  become: true
+  gather_facts: true
+  vars:
+    ansible_playbooks: /etc/ansible/plabooks
+    mountpoint: "/srv/share"
+    permission: '0777'
+    opts: 'rw,sync,no_root_squash,no_subtree_check'
+  
+  tasks:
+    # NFS RHEL
+    - name: Install NFS RHEL
+      yum:
+        name:
+          - nfs-utils
+          - nfs4-acl-tools
+        state: present
+      when: ansible_os_family == 'RedHat'
+
+    # NFS Debian
+    - name: Install NFS for Debian
+      apt:
+        name:
+          - nfs-common
+          - nfs-kernel-server
+        state: present
+        update_cache: true
+      when: ansible_os_family == 'Debian'
+
+    # Create the 'share' and assign permissions
+    - name: Create "{{ mountpoint }}"
+      file:
+        path: "{{ mountpoint }}"
+        state: directory
+        mode: "{{ permission }}"
+        owner: nobody
+        group: nogroup
+
+    # Set the access to 'share'
+    - name: Update /etc/exports
+      template: 
+       src: "{{ ansible_plabooks }}/exports.j2" 
+       dest: /etc/exports 
+       owner: root 
+       group: root
+
+    # Restart NFS 
+    - name: Restart nfs server
+      service: 
+       name: nfs-kernel-server 
+       state: restarted 
+
+    # Check mounts  
+    - name: Check the mounts   
