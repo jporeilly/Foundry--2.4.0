@@ -42,13 +42,4 @@
     # Display Pods in kube-system
     - name: Show output from command --> kubectl get pods -n kube-system
       debug:
-        msg: "{{ pods.stdout_lines }}" 
-
-    # NFS Debian
-    - name: Install NFS for Debian
-      apt:
-        name:
-          - apache2-utils
-        state: present
-        update_cache: true
-      when: ansible_os_family == 'Debian'       
+        msg: "{{ pods.stdout_lines }}"      
