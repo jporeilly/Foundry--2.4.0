@@ -13,7 +13,8 @@
   tags: kubeconfig
   
   tasks:
-    - name: Move kubectl to /usr/local/bin
+    # Copy over kubectl to /usr/local/bin
+    - name: Copy kubectl to /usr/local/bin
       command: sudo cp "{{ src }}/kubectl"  /usr/local/bin
 
     # Copy over admin.conf and change file name to config
@@ -21,6 +22,13 @@
       copy:
         src: "{{ src }}/admin.conf"
         dest: "{{ dst }}/config"
+
+    # Replace IP address in .kube/config
+    - name: Replace IP in .kube/config
+      path: "{{ dst }}/config"
+      regexp: "https://10.0.0.101:6443"
+      replace: "https://ansible-controller.skytap.example:6443"
+      backup: true   
 
     # Test kubectl config
     - name: Check kubectl connectivity from installer node to cluster
