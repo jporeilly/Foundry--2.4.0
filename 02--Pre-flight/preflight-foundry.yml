@@ -26,8 +26,8 @@
     # Replace IP address in .kube/config
     - name: Replace IP in .kube/config
       path: "{{ dst }}/config"
-      regexp: '^10\.0\.0\.101\:6433'
-      replace: 'ansible-controller.skytap.example:6443'
+      regexp: '(^Server:\s)(.*)$'
+      replace: 'Server: ansible-controller.skytap.example:6443'
       backup: true   
 
     # Test kubectl config
