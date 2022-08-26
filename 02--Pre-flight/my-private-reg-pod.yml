@@ -7,12 +7,12 @@ metadata:
   namespace: test
 spec:
   containers:
-    - name: ngnix
-      image: nginx:alpine
-      imagePullPolicy: Always
-      ports:
-      - name: nginx
-        containerPort: 8080
-        protocol: TCP
+  - name: ngnix
+    image: nginx:alpine
+    imagePullPolicy: Always
+    ports:
+    - name: nginx
+      containerPort: 8080
+      protocol: TCP
   imagePullSecrets:
-    - name: regcred
+  - name: regcred
