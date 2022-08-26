@@ -26,7 +26,7 @@
     # Replace IP address in .kube/config
     - name: Replace IP in .kube/config
       path: "{{ dst }}/config"
-      regexp: "(^Server:\s)(.*)$"
+      regexp: "(^Server:)(.*)$"
       replace: "Server: ansible-controller.skytap.example:6443"
       backup: true   
 
