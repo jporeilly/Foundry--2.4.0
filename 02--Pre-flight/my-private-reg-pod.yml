@@ -1,0 +1,18 @@
+---
+# Deploys an NGINX Pod pulled from local private Docker Regsitry.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ngnix-image
+  namespace: test
+spec:
+  containers:
+    - name: ngnix
+      image: nginx:alpine
+      imagePullPolicy: Always
+      ports:
+      - name: nginx
+        containerPort: 8080
+        protocol: TCP
+  imagePullSecrets:
+    - name: regcred
