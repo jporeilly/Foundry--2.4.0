@@ -25,7 +25,7 @@
 
     - name: Replace line in file examples
       replace: 
-        path: /etc/httpd/conf/httpd.conf
+        path: "{{ dst }}/config"
         regexp: '(^server: https://)(.*)$'
         replace: '\server: https://ansible-controller.skytap.example:6443'
         backup: yes  
