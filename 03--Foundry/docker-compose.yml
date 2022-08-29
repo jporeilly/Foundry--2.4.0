@@ -12,8 +12,8 @@ services:
       REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
       REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
       REGISTRY_HTTP_ADDR: "0.0.0.0:443"
-      REGISTRY_HTTP_TLS_CERTIFICATE: "/certs/ca.cert"
-      REGISTRY_HTTP_TLS_KEY: "/certs/ca.key"
+      REGISTRY_HTTP_TLS_CERTIFICATE: "/certs/client.cert"
+      REGISTRY_HTTP_TLS_KEY: "/certs/client.key"
       REGISTRY_STORAGE_DELETE_ENABLED: true 
     volumes:
       - /certs:/certs

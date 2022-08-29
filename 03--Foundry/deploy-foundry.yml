@@ -48,8 +48,8 @@
       tags: 
        - unpack 
 
-    # Install Cluster Services
-    - name: Install Cluster Services
+    # Deploy Cluster Services
+    - name: Deploy Cluster Services
       shell: 
         chdir: "{{ foundry_home }}"
         cmd: ./bin/install-cluster-services.sh -r {{ registry_domain }}:{{ registry_port }} -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/install-cluster-services-2.4.0.log
@@ -61,7 +61,7 @@
        - install 
        - install_cs
 
-    # Install Foundry CRDs
+    # Deploy Foundry CRDs
     - name: Run Custom Resource Definitions Script
       shell: 
         chdir: "{{ foundry_home }}"
@@ -74,8 +74,8 @@
        - install
        - install_crds
 
-    # Install the Foundry Soluton Control Plane
-    - name: Install Foundry Solution Control Plane
+    # Deploy the Foundry Soluton Control Plane
+    - name: Deploy Foundry Solution Control Plane
       shell: 
         chdir: "{{ foundry_home }}"
         cmd: ./bin/install-control-plane.sh -r {{ registry_domain }}:{{ registry_port }} -D true -c https://{{ apiserver_loadbalancer_domain_name }} 2>&1 | tee -a {{ logs_dir }}/install-control-plane-2.2.1.log
