@@ -24,7 +24,7 @@ Domain Name: skytap.example
 | Master Node 1       | master-node-01     | 10.0.0.101  | AlmaLinux 8.4   | k8s       | lumada   |
 | Worker Node 1       | worker-node-01     | 10.0.0.102  | AlmaLinux 8.4   | k8s       | lumada   |
 | Worker Node 2       | worker-node-02     | 10.0.0.103  | AlmaLinux 8.4   | k8s       | lumada   |
-| Ansible Controller  | ansible-controller | 10.0.0.2    | Ubuntu 22.04    | installer | lumada   |
+| Ansible Controller  | ansible-controller | 10.0.0.2    | Zorin Pro 16.1  | installer | lumada   |
 |
 
 VM sequence: 
