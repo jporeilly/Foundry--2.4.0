@@ -247,7 +247,8 @@ git --version
 ``Visual Studio Code is used for workshop Lab Guide:``
 ```
 sudo apt install snapd
-sudo snap install --classic code
+sudo snap install --classic 
+code
 ```
 Note: Whenever a new version is released, Visual Studio Code package will be automatically updated in the background.
 to use VSC:
