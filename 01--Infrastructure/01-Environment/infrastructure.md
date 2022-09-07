@@ -344,7 +344,7 @@ This server has been configured with an 'haproxy' user with sudo privileges.
 
 ``update (log in as root):``
 ```
-apt update -y
+sudo apt update -y
 ```
 ``add an 'haproxy' user:``
 ```
