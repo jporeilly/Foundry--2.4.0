@@ -45,7 +45,6 @@ registry_domain: ansible-controller.skytap.example
 # registry port
 registry_port: 443
 
-
 # =====  DNS ===== 
 # If on AWS and HV you will likley need to change the DNS route
 # to allow AWS private DNS lookup from inside the cluster.
