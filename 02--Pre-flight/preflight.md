@@ -2,7 +2,7 @@
 
 The following playbooks configure the cluster nodes and installs k8s-1.21.6 using kubespray-2.19.1.
 
-Prerequisites for the AlmaLinux 8.4 machines:
+Prerequisites for the AlmaLinux 8.5 machines:
 * A public key generated on your Ansible Controller
 * Key copied to hosts
 * SSH passwordless access on Nodes with root permissions
@@ -25,6 +25,14 @@ The following playbooks are run:
 
 #### cluster.yml
 * Installs k8s 1.23.7
+
+<strong>To run your playbooks ensure that venv ansible-2.12.5 is activated:</strong>  
+``to activate ansible:``
+```
+cd
+cd Python-venv
+source ansible-2.12.5/bin/activate
+```
 
 ---
 
