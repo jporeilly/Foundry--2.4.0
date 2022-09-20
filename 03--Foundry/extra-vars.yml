@@ -48,7 +48,6 @@ registry_port: 443
 # =====  DNS ===== 
 # If on AWS and HV you will likley need to change the DNS route
 # to allow AWS private DNS lookup from inside the cluster.
-change_dns: true
-# AWS DNS: 169.254.169.253  
+change_dns: true 
 # SkyTap DNS
 dns_server: 10.0.0.254
