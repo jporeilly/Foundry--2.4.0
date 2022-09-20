@@ -1,13 +1,13 @@
 ---
-# Download Kubespray 2.19.0 - Kubernetes 1.23.7
+# Download Kubespray 2.19.1 - Kubernetes 1.23.7
 - name: Download Kubespray
   hosts: "{{ groups['installer'][0] }}"
   become: false
   gather_facts: true
   vars:
     kubespray_home: ~/Packages
-    release: kubespray-2.19.0
-    version: v2.19.0
+    release: kubespray-2.19.1
+    version: v2.19.1
     ansible_playbooks: /etc/ansible/playbooks
   
   tasks:
