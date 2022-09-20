@@ -37,6 +37,13 @@ metrics_server_enabled: true
 # External load balancer for k8s masters
 apiserver_loadbalancer_domain_name: "haproxy.skytap.example"
 
+# ===== DOCKER REGISTRY =============
+# Set the Docker Registry
+
+# registry hostname
+registry_domain: ansible-controller.skytap.example
+# registry port
+registry_port: 443
 
 # =====  DNS ===== 
 # If on AWS and HV you will likley need to change the DNS route
