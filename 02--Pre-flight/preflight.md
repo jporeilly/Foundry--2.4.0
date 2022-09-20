@@ -1,6 +1,6 @@
 ## <font color='red'>Preflight - Hardware & Utils</font>  
 
-The following playbooks configure the cluster nodes and installs k8s-1.21.6 using kubespray-2.17.1.
+The following playbooks configure the cluster nodes and installs k8s-1.21.6 using kubespray-2.19.1.
 
 Prerequisites for the AlmaLinux 8.4 machines:
 * A public key generated on your Ansible Controller
@@ -21,10 +21,10 @@ The following playbooks are run:
 
 #### kubespray.yml
 * Create the release directory
-* Unpacks kubespray-2.17.1
+* Unpacks kubespray-2.19.1
 
 #### cluster.yml
-* Installs k8s 1.21.6
+* Installs k8s 1.23.7
 
 ---
 
@@ -73,9 +73,9 @@ Note: check that the hosts-skytap.yml & extra-vars.yml have been copied.
 
 ---
 
-<em>Run the playbook - kubespray-release-2.17.1/cluster.yml</em>   
-Its is important that you explicitly include all the parameters when running the kubespray-2.17.1/cluster.yml playbook. 
-Kubespray release 2.17.1 installs and configures the Foundry Platform supported version: kubernetes 1.21.6
+<em>Run the playbook - kubespray-release-2.19.1/cluster.yml</em>   
+Its is important that you explicitly include all the parameters when running the kubespray-2.19.1/cluster.yml playbook. 
+Kubespray release 2.19.1 installs and configures the Foundry Platform supported version: kubernetes 1.23.7
 
 Pre-requistes:
 * Firewalls are not managed by kubespray. You'll need to implement appropriate rules as needed. You should disable your firewall in order to avoid any issues during deployment.  
@@ -84,7 +84,7 @@ Pre-requistes:
 ``run the cluster.yml playbook:``
 ```
 cd
-cd ~/Packages/kubespray-2.17.1
+cd ~/Packages/kubespray-2.19.1
 ansible-playbook -i hosts-skytap.yml --extra-vars="@extra-vars.yml" --become --become-user=root -v cluster.yml
 ```
 Note: this is going to take about 6-8 mins..
@@ -95,7 +95,7 @@ Note: this is going to take about 6-8 mins..
 
 ``if you need to reset the k8s deployment:``
 ```
-cd ~/Packages/kubespray-2.17.1
+cd ~/Packages/kubespray-2.19.1
 ansible-playbook -i hosts-skytap.yml --extra-vars="@extra-vars.yml" reset.yml -b -v --become-user=root
 ```
 Note: This will still keep some residual config files, IP routing tables, etc
@@ -129,7 +129,7 @@ There is a sample inventory in the inventory folder. You need to copy that and n
 
 ``copy inventory/sample as inventory/mycluster:``
 ```
-cd kubespray-release-2.17/inventory
+cd kubespray-release-2.19.1/inventory
 sudo mkdir mycluster
 cd ..
 sudo chown -R installer mycluster
