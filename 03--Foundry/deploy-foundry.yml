@@ -35,7 +35,7 @@
       file:
        path: "{{ logs_dir }}"
        state: directory
-      when: logs.stat.exists == false
+      when: logs.stat.exists == true
       tags: 
        - info
 
@@ -44,7 +44,7 @@
       unarchive:
         src: "{{ packages_dir }}/{{ foundry_control }}.tgz"
         dest: "{{ foundry_home }}"
-      when: logs.stat.exists == true  
+      when: logs.stat.exists == false  
       tags: 
        - unpack 
 
