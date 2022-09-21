@@ -12,8 +12,7 @@
     ansible_ssh_private_key_file: "~/.ssh/id_rsa"
     ansible_ssh_private_key_file_name: "id_rsa"
     ansible_user: k8s
-    dns_server: 10.0.0.254
-    change_dns: true
+
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
@@ -82,32 +81,6 @@
        sysctl -p
      tags: 
       - elastic
-
-   # Writes out Hostnames to act as local DNS -  not really required as there's SkyTap DNS
-   - lineinfile:
-      path: /etc/sysconfig/network
-      state: present
-      line: 'HOSTNAME={{inventory_hostname}}.local'
-
-   - lineinfile:
-      path: /etc/hosts
-      state: present
-      line: '{{ansible_default_ipv4.address}}   {{inventory_hostname}}.local   {{inventory_hostname}}'
-   
-   # Check for DNS servers
-   - name: Get dhcp/dhclient.conf
-     shell: cat /etc/dhcp/dhclient.conf | grep domain-name-servers
-     ignore_errors: true
-     register: dhcp_nameserver_entry
-
-   # This file will rebuild the /etc/resolv.conf file on reboot.   
-   # Leverage the private DNS lookup of SkyTap
-   - name: Override current DNS entries
-     shell: |
-        cp /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.{{ 10000 | random }}.bak
-        echo "supersede domain-name-servers {{ dns_server }};" >> /etc/dhcp/dhclient.conf
-     register: dhcp_update       
-     when: change_dns and ("dhcp_nameserver_entry is not defined" or "'{{ dns_server }}' not in dhcp_nameserver_entry.stdout")      
 
    # Reboot the Nodes
    - name: Reboot the Nodes with all defaults
