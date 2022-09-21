@@ -15,7 +15,9 @@
     dns_server: 10.0.0.254
     change_dns: true
     ansible_python_interpreter: /usr/bin/python3
- 
+  args:
+    warn: false
+    
   tasks:
    # Ping Nodes
    - name: Ping Nodes
