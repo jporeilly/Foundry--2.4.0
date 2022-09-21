@@ -3,7 +3,7 @@
 # Setup kubectl for local user and root by copying from the cluster
 - name: Setup kubectl for 'installer' user on Ansible Controller
   hosts: "{{ groups['installer'][0] }}"
-  become: yes
+  become: true
   become_user: "{{ lookup('env','USER') }}"
   gather_facts: false
   any_errors_fatal: true
@@ -44,3 +44,4 @@
     - name: Show output from command --> kubectl get pods -n kube-system
       debug:
         msg: "{{ pods.stdout_lines }}"      
+
