@@ -35,7 +35,7 @@
       file:
        path: "{{ logs_dir }}"
        state: directory
-      when: logs.stat.exists == true
+      when: logs.stat.exists == false
       tags: 
        - info
 
@@ -52,7 +52,7 @@
     - name: Deploy Cluster Services
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/install-cluster-services.sh -r {{ registry_domain }}:{{ registry_port }} -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/install-cluster-services-2.4.0.log
+        cmd: ./bin/install-cluster-services.sh -r ansible-controller.skytap.example:443 -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/install-cluster-services-2.4.0.log
       async: 2500
       poll: 30
       register: ret
@@ -65,7 +65,7 @@
     - name: Run Custom Resource Definitions Script
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/apply-crds.sh -e -r {{ registry_domain }}:{{ registry_port }} -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/apply-crds.log
+        cmd: ./bin/apply-crds.sh -e -r ansible-controller.skytap.example:443 -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/apply-crds.log
       async: 2500
       poll: 30
       register: ret
@@ -78,7 +78,7 @@
     - name: Deploy Foundry Solution Control Plane
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/install-control-plane.sh -r {{ registry_domain }}:{{ registry_port }} -D true -c https://{{ apiserver_loadbalancer_domain_name }} 2>&1 | tee -a {{ logs_dir }}/install-control-plane-2.2.1.log
+        cmd: ./bin/install-control-plane.sh -r ansible-controller.skytap.example:443 -D true -c https://{{ apiserver_loadbalancer_domain_name }} 2>&1 | tee -a {{ logs_dir }}/install-control-plane-2.2.1.log
       async: 2500
       poll: 30
       register: ret
