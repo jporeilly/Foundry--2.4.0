@@ -12,7 +12,7 @@ services:
       REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
       REGISTRY_AUTH_HTPASSWD_REALM: Registry realm
       REGISTRY_HTTP_ADDR: "0.0.0.0:443"
-      REGISTRY_HTTP_TLS_CERTIFICATE: "/certs/registry.cert"
+      REGISTRY_HTTP_TLS_CERTIFICATE: "/certs/registry.crt"
       REGISTRY_HTTP_TLS_KEY: "/certs/registry.key"
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
       REGISTRY_STORAGE_DELETE_ENABLED: true 
