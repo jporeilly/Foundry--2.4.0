@@ -1,13 +1,13 @@
 ---
-# Download Kubespray 2.19.1 - Kubernetes 1.23.7
+# Download Kubespray 2.20 - Kubernetes 1.24.6
 - name: Download Kubespray
   hosts: "{{ groups['installer'][0] }}"
   become: false
   gather_facts: true
   vars:
     kubespray_home: ~/Packages
-    release: kubespray-2.19.1
-    version: v2.19.1
+    release: kubespray-2.20
+    version: v2.20
     ansible_playbooks: /etc/ansible/playbooks
   
   tasks:
@@ -41,8 +41,7 @@
       tags: 
        - info      
   
-    # Downloads kubespray into the mounted playbooks folder
-    # This is therefore, persisted on your local filesystem
+    # Downloads kubespray into Packages directory
     - name: Get Kubespray if required
       get_url:
         url: 'https://github.com/kubernetes-sigs/kubespray/archive/refs/tags/{{ version }}.zip'
@@ -51,8 +50,7 @@
       tags: 
        - install
  
-    # Extracts kubespray into the mounted playbooks folder
-    # This is therefore, persisted on your local filesystem
+    # Extracts kubespray into Packages directory
     - name: Unarchive Kubespray-{{ version }}
       unarchive:
         src: "{{ kubespray_home }}/{{ release }}.zip"
@@ -73,7 +71,7 @@
       tags: 
        - install
 
-    # May need to update path  
+    # Copy over extra-vars.yml  
     - name: Copy extra-vars.yml
       copy:
         src: "{{ ansible_playbooks }}/extra-vars.yml" 
@@ -81,7 +79,7 @@
       tags: 
        - install
 
-    # May need to update path 
+    # Copy over hosts-skytap.yml
     - name: Copy hosts-skytap.yml
       copy:
         src: "{{ ansible_playbooks }}/hosts-skytap.yml"
@@ -93,10 +91,8 @@
         msg: "Config files copied over: {{ release }}"
       tags: 
        - install
-      
-    # Run the kubespray playbook on the hosts
-    # - include: "{{ kubespray_home }}/{{ release }}/cluster.yml"
 
+    # Display cluster.yml playbook  
     - debug:
         msg:
           - "kubespray is available in {{ kubespray_home }}/{{ release }}"
