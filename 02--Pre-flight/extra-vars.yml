@@ -8,13 +8,10 @@ ansible_user: k8s
 
 # ===== KUBESPRAY 2.20.0 DEFAULT CONFIGS =============
 # Kubespray has a bunch of defaults that you can overide.  
-#
 # Kubespray default settings: ~/Packages/Kubespray-2.20.0/extra-playbooks/roles/kubespray-defaults/defaults/main.yaml
+#
 # Line 73: epel_enabled: true
-# Line 77: cluster_name: skytap.example
 # Line 100: deploy_netchecker: true
-# Line 232: kube-profiling: true
-# Line 299: ansible-controller.skytap.example:5000
 # Line 334: kubeconfig_localhost: true
 # Line 336: kubectl_localhost: true
 # Line 349: helm_enabled: true
