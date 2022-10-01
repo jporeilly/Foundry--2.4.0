@@ -6,10 +6,10 @@ ansible_ssh_private_key_file: "~/.ssh/id_rsa"
 ansible_ssh_private_key_file_name: "id_rsa"
 ansible_user: k8s
 
-# ===== KUBESPRAY 2.19.0 DEFAULT CONFIGS =============
+# ===== KUBESPRAY 2.20.0 DEFAULT CONFIGS =============
 # Kubespray has a bunch of default values that you can overide.  
 #
-# Kubespray default settings: ~/Packages/Kubespray-2.19.0/extra-playbooks/roles/kubespray-defaults/defaults/main.yaml
+# Kubespray default settings: ~/Packages/Kubespray-2.20.0/extra-playbooks/roles/kubespray-defaults/defaults/main.yaml
 # Line 73: epel_enabled: true
 # Line 77: cluster_name: skytap.example
 # Line 100: deploy_netchecker: true
@@ -22,10 +22,7 @@ ansible_user: k8s
 # Line 480: apiserver_loadbalancer_domain_name: haproxy.skytap.example
 
 # Kubespray default overides
-# just names the cluster
-cluster_name: skytap.example
-# checks Pod connectivity
-kube-profiling: true
+
 # install kubectl and generates local admin.conf
 kubeconfig_localhost: true
 kubectl_localhost: true
