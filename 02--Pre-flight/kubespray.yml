@@ -6,7 +6,7 @@
   gather_facts: true
   vars:
     kubespray_home: ~/Packages
-    release: kubespray-2.20
+    release: kubespray-release-2.20
     version: release-2.20
     ansible_playbooks: /etc/ansible/playbooks
   
