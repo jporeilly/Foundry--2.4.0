@@ -6,8 +6,8 @@
   gather_facts: true
   vars:
     kubespray_home: ~/Packages
-    release: kubespray-2.20.0
-    version: v2.20.0
+    release: kubespray-2.20
+    version: release-2.20
     ansible_playbooks: /etc/ansible/playbooks
   
   tasks:
@@ -44,7 +44,7 @@
     # Downloads kubespray into Packages directory
     - name: Get Kubespray if required
       get_url:
-        url: 'https://github.com/kubernetes-sigs/kubespray/archive/refs/tags/{{ version }}.zip'
+        url: 'https://github.com/kubernetes-sigs/kubespray/archive/refs/heads/{{ version }}.zip'
         dest: "{{ kubespray_home }}/{{ release }}.zip"
       when: kubespray.stat.exists == false
       tags: 
