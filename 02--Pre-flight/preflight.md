@@ -1,6 +1,6 @@
 ## <font color='red'>Preflight - Hardware & Utils</font>  
 
-The following playbooks configure the cluster nodes and installs k8s-1.21.6 using kubespray-2.19.1.
+The following playbooks configure the cluster nodes and installs k8s-1.24.6 using kubespray-2.20.0
 
 Prerequisites for the AlmaLinux 8.5 machines:
 * A public key generated on your Ansible Controller
@@ -21,10 +21,10 @@ The following playbooks are run:
 
 #### kubespray.yml
 * Create the release directory
-* Unpacks kubespray-2.19.1
+* Unpacks kubespray-2.20.0
 
 #### cluster.yml
-* Installs k8s 1.23.7
+* Installs k8s 1.24.6
 
 <strong>To run your playbooks ensure that venv ansible-2.12.5 is activated:</strong>  
 ``to activate ansible:``
@@ -81,9 +81,9 @@ Note: check that the hosts-skytap.yml & extra-vars.yml have been copied.
 
 ---
 
-<em>Run the playbook - kubespray-release-2.19.1/cluster.yml</em>   
-Its is important that you explicitly include all the parameters when running the kubespray-2.19.1/cluster.yml playbook. 
-Kubespray release 2.19.1 installs and configures the Foundry Platform supported version: kubernetes 1.23.7
+<em>Run the playbook - kubespray-release-2.20/cluster.yml</em>   
+Its is important that you explicitly include all the parameters when running the kubespray-release-2.20.0/cluster.yml playbook. 
+Kubespray release 2.20.0 installs and configures the Foundry Platform supported version: kubernetes 1.24.6
 
 Pre-requistes:
 * Firewalls are not managed by kubespray. You'll need to implement appropriate rules as needed. You should disable your firewall in order to avoid any issues during deployment.  
@@ -92,7 +92,7 @@ Pre-requistes:
 ``run the cluster.yml playbook:``
 ```
 cd
-cd ~/Packages/kubespray-2.19.1
+cd ~/Packages/kubespray-release-2.20
 ansible-playbook -i hosts-skytap.yml --extra-vars="@extra-vars.yml" --become --become-user=root -v cluster.yml
 ```
 Note: this is going to take about 6-8 mins..
@@ -103,7 +103,7 @@ Note: this is going to take about 6-8 mins..
 
 ``if you need to reset the k8s deployment:``
 ```
-cd ~/Packages/kubespray-2.19.1
+cd ~/Packages/kubespray-release-2.20
 ansible-playbook -i hosts-skytap.yml --extra-vars="@extra-vars.yml" reset.yml -b -v --become-user=root
 ```
 Note: This will still keep some residual config files, IP routing tables, etc
@@ -115,14 +115,6 @@ kubeadm reset -f
 ``remove all the data from all below locations:``
 ```
 sudo rm -rf /etc/cni /etc/kubernetes /var/lib/dockershim /var/lib/etcd /var/lib/kubelet /var/run/kubernetes ~/.kube/*
-```
-``flush all the firewall (iptables) rules (as root):``
-```
-sudo -i
-iptables -F && iptables -X
-iptables -t nat -F && iptables -t nat -X
-iptables -t raw -F && iptables -t raw -X
-iptables -t mangle -F && iptables -t mangle -X
 ```
 ``restart the Docker service:``
 ```
@@ -137,7 +129,7 @@ There is a sample inventory in the inventory folder. You need to copy that and n
 
 ``copy inventory/sample as inventory/mycluster:``
 ```
-cd kubespray-release-2.19.1/inventory
+cd kubespray-release-2.20/inventory
 sudo mkdir mycluster
 cd ..
 sudo chown -R installer mycluster
