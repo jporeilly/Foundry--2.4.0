@@ -8,7 +8,7 @@
   gather_facts: false
   any_errors_fatal: true
   vars:
-    src: "~/Packages/kubespray-2.20.0/artifacts"
+    src: "~/Packages/kubespray-release-2.20/artifacts"
     dst: "~/.kube"
   tags: kubeconfig
   
