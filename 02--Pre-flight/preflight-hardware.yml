@@ -69,6 +69,14 @@
         - nfs4-acl-tools
       state: latest
 
+   # Add NFS packages 
+   - name: NFS packages
+     dnf:
+      name:
+        - nfs-utils
+        - nfs4-acl-tools
+      state: latest
+
    # easy option :)  Once Foundry installed open Master / Worker ports for network - Calico 
    - name: Turn off firewall for kubernetes Install
      command: systemctl disable firewalld

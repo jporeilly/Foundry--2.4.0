@@ -45,3 +45,25 @@
       debug:
         msg: "{{ pods.stdout_lines }}"      
 
+    # Check for Helm
+    - name: Check Helm version
+      shell: helm version
+      register: helm_version
+      ignore_errors: true
+      tags: 
+       - helm
+
+    - name: Get Helm
+      get_url:
+         url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+         dest: ./get_helm.sh
+         mode: 700
+      when: helm_version.rc != 0
+      tags: 
+       - helm
+       
+    - name: Install Helm
+      shell: ./get_helm.sh
+      when: "'not found' in helm_version.stderr"
+      tags: 
+       - helm  
