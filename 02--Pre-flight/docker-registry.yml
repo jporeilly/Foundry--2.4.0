@@ -15,8 +15,6 @@ spec:
         app: registry
         name: registry
     spec:
-      nodeSelector:
-        node-type: worker
       containers:
       - name: registry
         image: registry:2
@@ -24,9 +22,9 @@ spec:
         - containerPort: 5000
         env:
         - name: REGISTRY_HTTP_TLS_CERTIFICATE
-          value: "/certs/tls.crt"
+          value: "/certs/registry.crt"
         - name: REGISTRY_HTTP_TLS_KEY
-          value: "/certs/tls.key"
+          value: "/certs/registry.key"
         volumeMounts:
         - name: registry-storage
           mountPath: /var/lib/registry
