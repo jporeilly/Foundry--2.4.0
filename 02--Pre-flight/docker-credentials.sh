@@ -5,8 +5,8 @@
 # conjunction with DOCKER_CONFIG - the config file directory location.
 
 # command line parameter default values
-DOCKER_REGISTRY="ansible-controller.skytap.example:443"
-DOCKER_USER="installer"
+DOCKER_REGISTRY="worker-node-01.skytap.example:5000"
+DOCKER_USER="k8s"
 DOCKER_PASSWORD="lumada"
 WRITE="no"
 
