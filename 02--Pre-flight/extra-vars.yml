@@ -35,7 +35,7 @@ apiserver_loadbalancer_domain_name: "haproxy.skytap.example"
 # Set the Docker Registry
 
 # registry hostname
-registry_domain: ansible-controller.skytap.example
+registry_domain: worker-node-01.skytap.example
 # registry port
 registry_port: 443
 
