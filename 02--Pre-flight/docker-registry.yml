@@ -15,26 +15,18 @@ spec:
         app: registry
         name: registry
     spec:
+      nodeSelector:
+        node-type: worker
       containers:
       - name: registry
         image: registry:2
         ports:
         - containerPort: 5000
-        env:
-        - name: REGISTRY_HTTP_TLS_CERTIFICATE
-          value: "/certs/registry.crt"
-        - name: REGISTRY_HTTP_TLS_KEY
-          value: "/certs/registry.key"
         volumeMounts:
-        - name: registry-storage
-          mountPath: /var/lib/registry
+        - name: lv-storage
+          mountPath: /data
           subPath: registry
-        - name: certs
-          mountPath: /certs
       volumes:
-        - name: registry-storage
+        - name: lv-storage
           persistentVolumeClaim:
             claimName: docker-registry-pvc
-        - name: certs
-          secret:
-            secretName: docker-registry-tls-cert
