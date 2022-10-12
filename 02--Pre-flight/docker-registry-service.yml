@@ -4,11 +4,11 @@ metadata:
   name: registry-service
   namespace: docker-registry
 spec:
-  selector:
-    app: registry
-  type: ClusterIP
+  selector: 
+   app: registry
+  type: NodePort 
   ports:
-    - name: docker-port
-      protocol: TCP
-      port: 5000
-      targetPort: 5000
+  - port: 5000
+    nodePort: 31320
+    protocol: TCP
+    targetPort: 5000   
