@@ -15,8 +15,12 @@ spec:
       labels:
         app: registry
         name: registry
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
     spec:
-      nodeSelector:
+      nodeSelector: 
         node-type: worker
       containers:
       - name: registry
@@ -24,21 +28,31 @@ spec:
         ports:
         - containerPort: 5000
         env:
+        - name: REGISTRY_AUTH
+          value: "htpasswd"
+        - name: REGISTRY_AUTH_HTPASSWD_REALM
+          value: "Registry Realm"
+        - name: REGISTRY_AUTH_HTPASSWD_PATH
+          value: "/auth/htpasswd"   
         - name: REGISTRY_HTTP_TLS_CERTIFICATE
           value: "/certs/tls.crt"
         - name: REGISTRY_HTTP_TLS_KEY
           value: "/certs/tls.key"
         volumeMounts:
-        - name: lv-storage
-          mountPath: /var/lib/registry
-          subPath: registry
-        - name: certs
-          mountPath: /certs
+        - name: registry-storage
+          mountPath: "/var/lib/registry"
+        - name: registry-certs
+          mountPath: "/certs"
+        - name: registry-auth
+          mountPath: "/auth"      
       volumes:
-        - name: lv-storage
+        - name: registry-storage
           persistentVolumeClaim:
             claimName: docker-registry-pvc
-        - name: certs
-          secret:
+        - name: registry-certs-secret
+          secretName:
             secretName: docker-registry-tls-cert
+        - name: registry-auth-secret
+          secret:
+            secretName: registry-auth-secret    
 
