@@ -47,7 +47,7 @@ spec:
             claimName: docker-registry-pvc
         - name: registry-certs-secret
           secret:
-            secretName: docker-registry-tls-cert
+            secretName: registry-tls-cert
         - name: registry-auth-secret
           secret:
             secretName: registry-auth-secret    
