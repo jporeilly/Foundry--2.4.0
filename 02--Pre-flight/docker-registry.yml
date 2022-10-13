@@ -37,9 +37,9 @@ spec:
         volumeMounts:
         - name: registry-storage
           mountPath: "/var/lib/registry"
-        - name: registry-certs
+        - name: registry-certs-secret
           mountPath: "/certs"
-        - name: registry-auth
+        - name: registry-auth-secret
           mountPath: "/auth"      
       volumes:
         - name: registry-storage
