@@ -50,7 +50,7 @@ spec:
           persistentVolumeClaim:
             claimName: docker-registry-pvc
         - name: registry-certs-secret
-          secretName:
+          secret:
             secretName: docker-registry-tls-cert
         - name: registry-auth-secret
           secret:
