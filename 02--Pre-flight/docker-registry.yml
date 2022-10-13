@@ -15,10 +15,6 @@ spec:
       labels:
         app: registry
         name: registry
-        resources:
-          limits:
-            memory: "256Mi"
-            cpu: "500m"
     spec:
       nodeSelector: 
         node-type: worker
