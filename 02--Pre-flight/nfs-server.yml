@@ -53,5 +53,12 @@
        name: nfs-kernel-server 
        state: restarted 
 
-    # Check mounts  
-    - name: Check the mounts   
+    - name: Check nfs mounts
+      shell: "showmount -e {{ groups['installer'][0] }}"
+      register: mounts
+      tags: [ 'install' ]
+   
+    - name: Showmounts
+      debug:
+        msg: "{{ mounts.stdout }}"
+      tags: [ 'install' ] 

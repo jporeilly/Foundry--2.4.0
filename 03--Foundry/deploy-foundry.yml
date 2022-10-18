@@ -52,7 +52,7 @@
     - name: Deploy Cluster Services
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/install-cluster-services.sh -r {{ registry_domain }}:{{ registry_port }} -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/install-cluster-services-2.4.0.log
+        cmd: ./bin/install-cluster-services.sh -I -r {{ registry_domain }}:{{ registry_port }} -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/install-cluster-services-2.4.0.log
       async: 2500
       poll: 30
       register: ret
@@ -65,7 +65,7 @@
     - name: Run Custom Resource Definitions Script
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/apply-crds.sh -e -r {{ registry_domain }}:{{ registry_port }} -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/apply-crds.log
+        cmd: ./bin/apply-crds.sh -e --skip_cluster_url_check -r {{ registry_domain }}:{{ registry_port }} -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/apply-crds.log
       async: 2500
       poll: 30
       register: ret
@@ -78,7 +78,7 @@
     - name: Deploy Foundry Solution Control Plane
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/install-control-plane.sh -r {{ registry_domain }}:{{ registry_port }} -D true -c https://{{ apiserver_loadbalancer_domain_name }} 2>&1 | tee -a {{ logs_dir }}/install-control-plane-2.2.1.log
+        cmd: ./bin/install-control-plane.sh  -I -r {{ registry_domain }}:{{ registry_port }} -D true -c https://{{ apiserver_loadbalancer_domain_name }} 2>&1 | tee -a {{ logs_dir }}/install-control-plane-2.2.1.log
       async: 2500
       poll: 30
       register: ret
@@ -86,6 +86,26 @@
       tags: 
        - install
        - install_cp
+
+    - name: Install Metrics Add-On
+      shell: 
+        chdir: {{ foundry_home }}/control-plane
+        cmd: ./tools/bin/apply-crds.sh -r {{ master_node_for_registry }}:{{ master_node_for_registry_port }} -C ./metrics-addon-1.0.0/crd-charts/ -k ~/.kube/config --insecure -x 2>&1 | tee -a ./install-logs/install-metrics-add-on.log
+      async: 2500
+      poll: 30
+      register: ret
+      failed_when: "ret.rc > 0 or 'no such file' in ret.stdout"
+      tags: [install, install_metrics]
+
+    - name: Upload Metrics Add-On Solution
+      shell: 
+        chdir: {{ foundry_home }}/control-plane
+        cmd: ./tools/bin/upload-solutions.sh -C metrics-addon-1.0.0/charts/ -I metrics-addon-1.0.0/images/ -k ~/.kube/config -n hitachi-solutions 2>&1 | tee -a ./install-logs/install-metrics-add-on.log
+      async: 2500
+      poll: 30
+      register: ret
+      failed_when: "ret.rc > 0 or 'no such file' in ret.stdout"
+      tags: [install, upload_metrics]       
 
     # Check hitachi-solutions pods
     - name: Confirm Foundry
