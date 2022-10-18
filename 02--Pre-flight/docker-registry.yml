@@ -50,5 +50,4 @@ spec:
             secretName: registry-tls-cert
         - name: registry-auth-secret
           secret:
-            secretName: registry-auth-secret    
-
+            secretName: registry-auth-secret
