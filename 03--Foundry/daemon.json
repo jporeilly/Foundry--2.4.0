@@ -10,9 +10,9 @@
     "icc": false,
     "tls": true,
     "tlsverify": true,
-    "tlscacert": "/etc/docker/ssl/ca.pem",
-    "tlscert": "/etc/docker/ssl/ca.crt",
-    "tlskey": "/etc/docker/ssl/ca.key",
+    "tlscacert": "/etc/docker/ssl/ca.crt",
+    "tlscert": "/certs/registry.cert",
+    "tlskey": "/certs/registry.key",
     "default-ulimits": {
       "nofile": {
         "Name": "nofile",

@@ -3,12 +3,12 @@
 # Setup kubectl for local user and root by copying from the cluster
 - name: Setup kubectl for 'installer' user on Ansible Controller
   hosts: "{{ groups['installer'][0] }}"
-  become: yes
+  become: true
   become_user: "{{ lookup('env','USER') }}"
   gather_facts: false
   any_errors_fatal: true
   vars:
-    src: "~/Packages/kubespray-2.19.0/artifacts"
+    src: "~/Packages/kubespray-release-2.20/artifacts"
     dst: "~/.kube"
   tags: kubeconfig
   
@@ -44,3 +44,26 @@
     - name: Show output from command --> kubectl get pods -n kube-system
       debug:
         msg: "{{ pods.stdout_lines }}"      
+
+    # Check for Helm
+    - name: Check Helm version
+      shell: helm version
+      register: helm_version
+      ignore_errors: true
+      tags: 
+       - helm
+
+    - name: Get Helm
+      get_url:
+         url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+         dest: ./get_helm.sh
+         mode: 700
+      when: helm_version.rc != 0
+      tags: 
+       - helm
+       
+    - name: Install Helm
+      shell: ./get_helm.sh
+      when: "'not found' in helm_version.stderr"
+      tags: 
+       - helm  

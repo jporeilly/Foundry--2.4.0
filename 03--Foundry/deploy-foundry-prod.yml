@@ -44,7 +44,7 @@
       unarchive:
         src: "{{ packages_dir }}/{{ foundry_control }}.tgz"
         dest: "{{ foundry_home }}"
-      when: logs.stat.exists == true  
+      when: logs.stat.exists == false  
       tags: 
        - unpack 
 
@@ -52,7 +52,7 @@
     - name: Deploy Cluster Services
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/install-cluster-services.sh -I -r {{ registry_domain }}:{{ registry_port }} -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/install-cluster-services-2.4.0.log
+        cmd: ./bin/install-cluster-services.sh -I-r worker-node-01.skytap.example:31320 -u k8s -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/install-cluster-services-2.4.0.log
       async: 2500
       poll: 30
       register: ret

@@ -12,8 +12,9 @@
     ansible_ssh_private_key_file: "~/.ssh/id_rsa"
     ansible_ssh_private_key_file_name: "id_rsa"
     ansible_user: k8s
+
     ansible_python_interpreter: /usr/bin/python3
- 
+
   tasks:
    # Ping Nodes
    - name: Ping Nodes
@@ -68,6 +69,14 @@
         - nfs4-acl-tools
       state: latest
 
+   # Add NFS packages 
+   - name: NFS packages
+     dnf:
+      name:
+        - nfs-utils
+        - nfs4-acl-tools
+      state: latest
+
    # easy option :)  Once Foundry installed open Master / Worker ports for network - Calico 
    - name: Turn off firewall for kubernetes Install
      command: systemctl disable firewalld
@@ -79,7 +88,7 @@
        echo "vm.max_map_count=262144" >> /etc/sysctl.d/sysctl.conf
        sysctl -p
      tags: 
-      - elastic  
+      - elastic
 
    # Reboot the Nodes
    - name: Reboot the Nodes with all defaults

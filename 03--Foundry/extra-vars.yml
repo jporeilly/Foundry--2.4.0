@@ -6,15 +6,12 @@ ansible_ssh_private_key_file: "~/.ssh/id_rsa"
 ansible_ssh_private_key_file_name: "id_rsa"
 ansible_user: k8s
 
-# ===== KUBESPRAY 2.19.0 DEFAULT CONFIGS =============
-# Kubespray has a bunch of defaults that you can overide.  
+# ===== KUBESPRAY 2.20.0 DEFAULT CONFIGS =============
+# Kubespray has a bunch of default values that you can overide.  
+# Kubespray default settings: ~/Packages/Kubespray-2.20.0/extra-playbooks/roles/kubespray-defaults/defaults/main.yaml
 #
-# Kubespray default settings: ~/Packages/Kubespray-2.19.0/extra-playbooks/roles/kubespray-defaults/defaults/main.yaml
 # Line 73: epel_enabled: true
-# Line 77: cluster_name: skytap.example
 # Line 100: deploy_netchecker: true
-# Line 232: kube-profiling: true
-# Line 299: ansible-controller.skytap.example:5000
 # Line 334: kubeconfig_localhost: true
 # Line 336: kubectl_localhost: true
 # Line 349: helm_enabled: true
@@ -22,10 +19,7 @@ ansible_user: k8s
 # Line 480: apiserver_loadbalancer_domain_name: haproxy.skytap.example
 
 # Kubespray default overides
-# just names the cluster
-cluster_name: skytap.example
-# checks Pod connectivity
-kube-profiling: true
+
 # install kubectl and generates local admin.conf
 kubeconfig_localhost: true
 kubectl_localhost: true
@@ -37,10 +31,17 @@ metrics_server_enabled: true
 # External load balancer for k8s masters
 apiserver_loadbalancer_domain_name: "haproxy.skytap.example"
 
+# ===== DOCKER REGISTRY =============
+# Set the Docker Registry
+
+# registry hostname
+registry_domain: worker-node-01.skytap.example
+# registry port
+registry_port: 443
 
 # =====  DNS ===== 
 # If on AWS and HV you will likley need to change the DNS route
 # to allow AWS private DNS lookup from inside the cluster.
-change_dns: true
-#dns_server: 169.254.169.253 # aws private dns
-dns_server: 10.0.0.254 # SkyTap DNS
+change_dns: true 
+# SkyTap DNS
+dns_server: 10.0.0.254
