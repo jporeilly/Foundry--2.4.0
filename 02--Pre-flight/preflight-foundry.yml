@@ -53,6 +53,7 @@
       tags: 
        - helm
 
+    # Download Helm
     - name: Get Helm
       get_url:
          url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
@@ -61,7 +62,8 @@
       when: helm_version.rc != 0
       tags: 
        - helm
-       
+
+    # Install Helm     
     - name: Install Helm
       shell: ./get_helm.sh
       when: "'not found' in helm_version.stderr"
