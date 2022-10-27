@@ -37,5 +37,5 @@ DataOps unlocks business value by operationalizing data management with automati
 
 | Artifact                   | Date     |  
 | ---------------------------| ---------| 
-| Course released            | 31/08/22 | 
+| Course released            | 31/10/22 | 
 |
