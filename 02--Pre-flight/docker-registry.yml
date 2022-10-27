@@ -22,7 +22,7 @@ spec:
       - name: registry
         image: registry:2
         ports:
-        - containerPort: 5000
+        - containerPort: 443
         env:
         - name: REGISTRY_AUTH
           value: "htpasswd"
@@ -50,5 +50,4 @@ spec:
             secretName: registry-tls-cert
         - name: registry-auth-secret
           secret:
-            secretName: registry-auth-secret    
-
+            secretName: registry-auth-secret
