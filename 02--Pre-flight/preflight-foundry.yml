@@ -59,7 +59,7 @@
          url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
          dest: ./get_helm.sh
          mode: 700
-      when: helm_version.rc != 0
+      when: helm_version.rc != 1
       tags: 
        - helm
 
@@ -68,4 +68,4 @@
       shell: ./get_helm.sh
       when: "'not found' in helm_version.stderr"
       tags: 
-       - helm  
+       - helm 
