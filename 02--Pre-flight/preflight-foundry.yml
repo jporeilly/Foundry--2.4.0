@@ -47,7 +47,7 @@
 
 # Install Helm3 on all hosts 
 - name: Install helm on all hosts 
-  hosts:  "{{ groups['installer'][0] }}"
+  hosts:  all
   become: true
   become_method: sudo
   become_user: root
