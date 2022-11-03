@@ -8,7 +8,7 @@ spec:
    app: registry
   type: NodePort 
   ports:
-  - port: 443
+  - port: 5000
     nodePort: 31320
     protocol: TCP
-    targetPort: 443   
+    targetPort: 5000  
