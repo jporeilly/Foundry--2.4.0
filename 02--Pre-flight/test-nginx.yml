@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
   - name: ngnix
-    image: worker-node-01.skytap.example:31320/nginx:alpine
+    image: nginx:alpine
     imagePullPolicy: Always
     ports:
     - name: nginx
