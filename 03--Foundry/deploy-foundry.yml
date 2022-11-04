@@ -65,7 +65,7 @@
     - name: Run Custom Resource Definitions Script
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/apply-crds.sh -e --skip_cluster_url_check -r {{ registry_domain }}:{{ registry_port }} -u installer -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/apply-crds.log
+        cmd: ./bin/apply-crds.sh -e --skip_cluster_url_check -r worker-node-01.skytap.example:31320 -u k8s -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/apply-crds.log
       async: 2500
       poll: 30
       register: ret
@@ -78,7 +78,7 @@
     - name: Deploy Foundry Solution Control Plane
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/install-control-plane.sh  -I -r {{ registry_domain }}:{{ registry_port }} -D true -c https://{{ apiserver_loadbalancer_domain_name }} 2>&1 | tee -a {{ logs_dir }}/install-control-plane-2.2.1.log
+        cmd: ./bin/install-control-plane.sh  -I -r worker-node-01.skytap.example:31320 -D true -c https://{{ apiserver_loadbalancer_domain_name }} 2>&1 | tee -a {{ logs_dir }}/install-control-plane-2.2.1.log
       async: 2500
       poll: 30
       register: ret
@@ -90,7 +90,7 @@
     - name: Install Metrics Add-On
       shell: 
         chdir: {{ foundry_home }}/control-plane
-        cmd: ./tools/bin/apply-crds.sh -r {{ master_node_for_registry }}:{{ master_node_for_registry_port }} -C ./metrics-addon-1.0.0/crd-charts/ -k ~/.kube/config --insecure -x 2>&1 | tee -a ./install-logs/install-metrics-add-on.log
+        cmd: ./tools/bin/apply-crds.sh -r worker-node-01.skytap.example:31320 -C ./metrics-addon-1.0.0/crd-charts/ -k ~/.kube/config --insecure -x 2>&1 | tee -a ./install-logs/install-metrics-add-on.log
       async: 2500
       poll: 30
       register: ret
