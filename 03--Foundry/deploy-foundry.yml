@@ -52,7 +52,7 @@
     - name: Deploy Cluster Services
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/install-cluster-services.sh -I-r worker-node-01.skytap.example:31320 -u k8s -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/install-cluster-services-2.4.0.log
+        cmd: ./bin/install-cluster-services.sh -r worker-node-01.skytap.example:31320 -u k8s -p lumada -D true 2>&1 | tee -a {{ logs_dir }}/install-cluster-services-2.4.0.log
       async: 2500
       poll: 30
       register: ret
@@ -78,7 +78,7 @@
     - name: Deploy Foundry Solution Control Plane
       shell: 
         chdir: "{{ foundry_home }}"
-        cmd: ./bin/install-control-plane.sh  -I -r worker-node-01.skytap.example:31320 -D true -c https://{{ apiserver_loadbalancer_domain_name }} 2>&1 | tee -a {{ logs_dir }}/install-control-plane-2.2.1.log
+        cmd: ./bin/install-control-plane.sh  -r worker-node-01.skytap.example:31320 -D true -c https://{{ apiserver_loadbalancer_domain_name }} 2>&1 | tee -a {{ logs_dir }}/install-control-plane-2.2.1.log
       async: 2500
       poll: 30
       register: ret
