@@ -89,7 +89,7 @@
 
     - name: Install Metrics Add-On
       shell: 
-        chdir: {{ foundry_home }}/control-plane
+        chdir: "{{ foundry_home }}/control-plane"
         cmd: ./tools/bin/apply-crds.sh -r worker-node-01.skytap.example:31320 -C ./metrics-addon-1.0.0/crd-charts/ -k ~/.kube/config --insecure -x 2>&1 | tee -a ./install-logs/install-metrics-add-on.log
       async: 2500
       poll: 30
@@ -99,7 +99,7 @@
 
     - name: Upload Metrics Add-On Solution
       shell: 
-        chdir: {{ foundry_home }}/control-plane
+        chdir: "{{ foundry_home }}/control-plane"
         cmd: ./tools/bin/upload-solutions.sh -C metrics-addon-1.0.0/charts/ -I metrics-addon-1.0.0/images/ -k ~/.kube/config -n hitachi-solutions 2>&1 | tee -a ./install-logs/install-metrics-add-on.log
       async: 2500
       poll: 30
