@@ -27,7 +27,7 @@
     - name: Create .kube directory
       file:
         path: "{{ dst}}"
-        state: touch
+        state: directory
       when: not register_kube_check.stat.exists 
 
     # Copy over admin.conf and change file name to config
