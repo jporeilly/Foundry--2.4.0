@@ -17,6 +17,19 @@
     - name: Copy kubectl to /usr/local/bin
       command: sudo cp "{{ src }}/kubectl"  /usr/local/bin
 
+    # Check for .kube directory
+    - name: Check for .kube directory
+      stat:
+       path: .kube
+      register: register_kube
+
+    # Create .kube if doesn't exist
+    - name: Create .kube directory
+      file:
+        path: .kube
+        state: touch
+      when: not register_kube.stat.exists 
+
     # Copy over admin.conf and change file name to config
     - name: Copy admin.conf to .kube/config
       copy:
