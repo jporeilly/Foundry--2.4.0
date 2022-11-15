@@ -28,7 +28,7 @@
       file:
         path: ./kube
         state: touch
-      when: not register_kube.stat.exists 
+      when: not register_kube_check.stat.exists 
 
     # Copy over admin.conf and change file name to config
     - name: Copy admin.conf to .kube/config
