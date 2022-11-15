@@ -58,15 +58,6 @@
       debug:
         msg: "{{ pods.stdout_lines }}"      
 
-# Check for Helm3 on all hosts 
-- name: Install helm on all hosts 
-  hosts:  all
-  become: true
-  become_method: sudo
-  become_user: root
-  gather_facts: false
-
-  tasks:
     # Check for Helm
     - name: Check Helm version
       shell: helm version
